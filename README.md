@@ -50,12 +50,11 @@ MATCH (p:Producto)-[:PERTENECE_A]->(cat:Categoria {nombre: 'Laptops'})
             RETURN p
 
 - Q14. Todos los pedidos de compra de un proveedor en particular son transferidos a otro proveedor por un cambio de contrato.
-  MATCH (provAnt:Proveedor {id: 'PR002'})<-[:PEDIDO_REALIZADO_A]-(pc:PedidoCompra) 
-           MATCH (provNuevo:Proveedor {id: 'PR005'}) 
-           MATCH (provAnt)<-[r:PEDIDO_REALIZADO_A]-(pc) 
-           DELETE r 
-           CREATE (provNuevo)-[:PEDIDO_REALIZADO_A]->(pc);
-           return pc
+  MATCH (provAnt:Proveedor {id: 'PR004'})<-[:REALIZADO_A]-(pc:PedidoCompra) 
+MATCH (provNuevo:Proveedor {id: 'PR001'}) 
+MATCH (provAnt)<-[r:REALIZADO_A]-(pc) 
+DELETE r // Eliminar solo la relación
+CREATE (provNuevo)-[:REALIZADO_A]->(pc);
 - Q15. Eliminar todos los clientes que han realizado devoluciones..
   MATCH (d:Devolucion)-[:PERTENECE_A]->(c:Cliente)
             WITH c, d, c AS clienteEliminado
