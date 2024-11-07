@@ -8,7 +8,7 @@
 **1. Considere el caso de una empresa mayorista de materiales de construcción. Todas las ventas que hace una sucursal implica la emisión de una factura. A la empresa le interesan los siguientes aspectos:**
 
 ## Prerequisitos de las APIS:
-**1.1 Desargar el archivo txt llamado datosNEO4j.txt**
+**1.1 Desargar el archivo txt llamado [datosNEO4j](https://github.com/cesarurielhr/01redisapi/edit/main/README.md).txt**
 
 **1.2. Descargar desde DockerHub la imagen de la APIS con el siguiente comando:**
 ```
@@ -20,14 +20,14 @@ docker pull cesarurielhr/02_redis_api
  
 **1.5 Querys**
 Q01. Obtener la lista de productos que tienen menos de 10 unidades en stock.
-```
-MATCH (p:Producto) 
-WHERE p.stock < 10 
-RETURN p
-```
+  ```
+  MATCH (p:Producto) 
+  WHERE p.stock < 10 
+  RETURN p
+  ```
 - Q02. Encontrar los proveedores que suministran productos de una categoría en específico..
   ```
-  MATCH (prov:Proveedor)-[:SUMINISTRA]->(p:Producto)-[:PERTENECE_A]->(cat:Categoria {nombre: 'Smarphones'}) .
+  MATCH (prov:Proveedor)-[:SUMINISTRA]->(p:Producto)-[:PERTENECE_A]->(cat:Categoria {nombre: 'Smartphones'}) 
   RETURN DISTINCT prov
   ```
 - Q03. Obtener la lista de pedidos de compra que fueron realizados a un proveedor en específico..
@@ -36,9 +36,9 @@ RETURN p
   ```
 - Q04. Encontrar los productos que han sido comprados por más de 5 clientes diferentes.
   ```
-   MATCH (cli:Cliente)-[:HACE]->(pv:PedidoVenta)
-   WITH pv, COUNT(DISTINCT cli) AS numClientes
-   WHERE numClientes > 5
+   MATCH (cli:Cliente)-[:HACE]->(pv:PedidoVenta)-[:INCLUYE_PRODUCTO]->(p:Producto)
+   WITH pv,p, COUNT(DISTINCT cli) AS numClientes
+   WHERE numClientes > 5 return pv,p
   ```
 - Q05. Obtener la lista de todos los  proveedores.
   ```
@@ -46,10 +46,8 @@ RETURN p
   ```
 - Q06. Encontrar los pedidos de venta que tienen una devolución
   ```
-  MATCH (d:Devolucion)-[:PERTENECE_A]->(c:Cliente)
-            WITH c, d, c AS clienteEliminado
-            DETACH DELETE c, d
-            RETURN clienteEliminado;
+  MATCH (cli:Cliente)<-[:PERTENECE_A]-(devolucion:Devolucion)-[:PERTENECE_A]->(pedidoVenta:PedidoVenta)
+  RETURN cli, devolucion, pedidoVent
   ```
 - Q07. Listar los pedidos de venta que tienen un valor total mayor a $10,000.
   ```
@@ -65,9 +63,19 @@ RETURN p
            CREATE (provNuevo)-[:SUMINISTRA]->(p) 
            RETURN p
    ```
+   Comprobacion: Antes de la ejecucion del query
+   ```
+   MATCH(prov:Proveedor {id:'PR002'})-[:SUMINISTRA]->(p:Producto) return prov,p
+   MATCH(prov:Proveedor {id:'PR005'})-[:SUMINISTRA]->(p:Producto) return prov,p
+   ```
+  Despues de la ejecucion del query
+   ```
+   MATCH(prov:Proveedor {id:'PR002'})-[:SUMINISTRA]->(p:Producto) return prov,p
+   MATCH(prov:Proveedor {id:'PR005'})-[:SUMINISTRA]->(p:Producto) return prov,p
+   ```
 - Q09. Obtener la lista de proveedores que han recibido pedidos de compra por más de $50,000 en total.
   ```
-  MATCH (prov:Proveedor)<-[:REALIZADO_A]-(pc:PedidoCompra)
+  MATCH (prov:Proveedor)<-[:PEDIDO_REALIZADO_A]-(pc:PedidoCompra)
   WITH prov, SUM(pc.valor) AS totalCompras
   WHERE totalCompras > 50000
   RETURN prov
@@ -109,3 +117,4 @@ RETURN p
             DETACH DELETE c, d
             RETURN clienteEliminado;
   ```
+  Comprobar con el query Q6
