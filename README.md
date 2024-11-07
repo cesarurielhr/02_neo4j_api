@@ -95,7 +95,7 @@ Q01. Obtener la lista de productos que tienen menos de 10 unidades en stock.
   ```
    MATCH (prov:Proveedor)
    OPTIONAL MATCH (prov)-[r1]-(p:Producto)-[r2]-()
-   DETACH DELETE prov.p
+   DETACH DELETE prov,p
    RETURN COUNT(prov) AS proveedoresEliminados;
 
   ```
