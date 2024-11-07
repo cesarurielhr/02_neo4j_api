@@ -84,29 +84,33 @@ Q01. Obtener la lista de productos que tienen menos de 10 unidades en stock.
   ```
   MATCH (p:Producto) 
   WHERE p.stock = 0 
-  RETURN p;
+  RETURN p
   ```
 - Q11. Obtener la lista de clientes.
- ```
-    MATCH (cli:Cliente) 
-    RETURN cli;
- ```
+  ```
+     MATCH (cli:Cliente) 
+     RETURN cli
+  ```
 - Q12. Eliminar todos los proveedores y sus nodos asociados..
   ```
-   MATCH (p:Proveedor)
-            OPTIONAL MATCH (p)-[r]-()
-            DETACH DELETE p
-            RETURN COUNT(p) AS eliminados;
+   MATCH (prov:Proveedor)
+   OPTIONAL MATCH (prov)-[r1]-(p:Producto)-[r2]-()
+   DETACH DELETE prov.p
+   RETURN COUNT(prov) AS proveedoresEliminados;
+
   ```
 - Q13. Todos los productos de una categoría específica eliminados del inventario.
   ```
+  //Primero antes de ejecutar y depues de ejecutar
   MATCH (p:Producto)-[:PERTENECE_A]->(cat:Categoria {nombre: 'Laptops'})
-            RETURN p
+  RETURN p
+  //Query 13
+  MATCH (p:Producto)-[:PERTENECE_A]->(cat:Categoria {nombre:'Laptops'}) DETACH DELETE p;
   ```
 - Q14. Todos los pedidos de compra de un proveedor en particular son transferidos a otro proveedor por un cambio de contrato.
   ```
   MATCH (provNuevo:Proveedor {id: 'PR001'}) 
-  MATCH (provAnt)<-[r:PEDIDO_REALIZADO_A]-(pc) 
+  MATCH (provAnt:Proveedor {id: 'PR002'})<-[r:PEDIDO_REALIZADO_A]-(pc) 
   DELETE r 
   CREATE (provNuevo)<-[:PEDIDO_REALIZADO_A]-(pc);
   ```
