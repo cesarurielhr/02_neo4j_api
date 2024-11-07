@@ -1,4 +1,24 @@
-﻿# 02_neo4j_api
+# DOCUMENTACION DE LA API  
+## Bases de Datos NoSQL
+> [!NOTE]
+> **Alumno:** César Uriel Hernández Rodríguez `@cesarurielhr`  
+> **Grupo:** 5A (7:00-8:00)  
+> **Docente:** Jorge Saúl Montes Cáceres  
+
+**1. Considere el caso de una empresa mayorista de materiales de construcción. Todas las ventas que hace una sucursal implica la emisión de una factura. A la empresa le interesan los siguientes aspectos:**
+
+## Prerequisitos de las APIS:
+**1.1 Desargar el archivo txt llamado datosNEO4j.txt**
+
+**1.2. Descargar desde DockerHub la imagen de la APIS con el siguiente comando:**
+```
+docker pull cesarurielhr/02_redis_api
+```
+**1.3 Inicializar un docker Compose en que incluya un contenedor api y otro contenedorque contiene los bd de neo4j y la bd de cache redis**
+
+**1.4 ENDPOINTS**
+ 
+**1.5 Querys**
 Q01. Obtener la lista de productos que tienen menos de 10 unidades en stock.
 MATCH (p:Producto) 
 WHERE p.stock < 10 
