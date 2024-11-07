@@ -355,14 +355,11 @@ MATCH (cli6:Cliente {id: 'C006'}),
 (pedidoVenta6:PedidoVenta {id: 'PV6'}) 
 CREATE (cli6)-[:HACE]->(pedidoVenta6);
 MATCH (cli6:Cliente {id:'C006'}), 
-(pedidoVenta1:PedidoVenta {id: 'PV1'})
-CREATE (cli6)-[:HACE]->(pedidoVenta1);
+(pedidoVenta2:PedidoVenta {id: 'PV2'})
+CREATE (cli6)-[:HACE]->(pedidoVenta2);
 MATCH (cli6:Cliente {id:'C006'}), 
 (pedidoVenta5:PedidoVenta {id: 'PV5'})
 CREATE (cli6)-[:HACE]->(pedidoVenta5);
-MATCH (cli6:Cliente {id:'C006'}), 
-(pedidoVenta3:PedidoVenta {id: 'PV3'})
-CREATE (cli6)-[:HACE]->(pedidoVenta3);
 
 
 //Cliente 7
@@ -372,6 +369,9 @@ CREATE (cli7)-[:HACE]->(pedidoVenta7);
 MATCH (cli7:Cliente {id:'C007'}), 
 (pedidoVenta2:PedidoVenta {id: 'PV2'})
 CREATE (cli7)-[:HACE]->(pedidoVenta2);
+MATCH (cli7:Cliente {id: 'C007'}), 
+(pedidoVenta1:PedidoVenta {id: 'PV1'}) 
+CREATE (cli7)-[:HACE]->(pedidoVenta1);
 
 //Cliente 8
 MATCH (cli8:Cliente {id: 'C008'}),  
