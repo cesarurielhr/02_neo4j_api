@@ -1,24 +1,67 @@
-# DOCUMENTACION DE LA API  
-## Bases de Datos NoSQL
-> [!NOTE]
-> **Alumno:** César Uriel Hernández Rodríguez `@cesarurielhr`  
+# DOCUMENTACION DE LA API ⚛️
+## Bases de Datos NoSQL 🤟
+## LABORATORIO 02_NEO4J_API 🟣🟠🔵
+
+> **DATOS DEL ALUMNO**🧑‍🎓
+> 
+> **Alumno:** César Uriel Hernández Rodríguez [`@cesarurielhr`](https://github.com/cesarurielhr) 👾  
 > **Grupo:** 5A (7:00-8:00)  
 > **Docente:** Jorge Saúl Montes Cáceres  
 
-**1. Considere el caso de una empresa mayorista de materiales de construcción. Todas las ventas que hace una sucursal implica la emisión de una factura. A la empresa le interesan los siguientes aspectos:**
+## CASO EJEMPLO - Gestión de Inventarios de una empresa🏬
 
-## Prerequisitos de las APIS:
-**1.1 Desargar el archivo txt llamado [datosNEO4j](https://github.com/cesarurielhr/01redisapi/edit/main/README.md).txt**
+Para la Gestión de Inventarios de una empresa de distribución de productos electrónicos, un sistema adecuado debería cubrir varias áreas clave y permitir realizar diversas consultas (queries) para optimizar la operación. A continuación, te doy una descripción detallada de los componentes y las consultas que se necesitan en este sistema.
 
-**1.2. Descargar desde DockerHub la imagen de la APIS con el siguiente comando:**
+**Estructura del Sistema:** 🏗️
+
+**Productos:** 📺
+
+ - Atributos: ID, nombre de la empresa, país de origen, teléfono y correo electrónico de contacto.
+ - Un proveedor puede suministrar uno o más productos, y es esencial mantener esta relación para poder rastrear la procedencia de cada producto.
+
+**Pedidos de Compra:** 👛
+
+ - Atributos: producto pedido, cantidad solicitada, precio unitario, fecha de pedido y fecha de recepción.
+ - Cada pedido de compra está asociado a un proveedor específico, lo cual permite controlar las relaciones de compra y el flujo de stock en el inventario.
+
+**Clientes:** 🧔
+
+ - Atributos: ID, nombre, dirección, ciudad, teléfono y correo electrónico.
+ - Los clientes pueden hacer múltiples pedidos de venta a lo largo del tiempo, lo que permite registrar la historia de compras y la fidelidad de cada cliente.
+
+**Pedidos de Venta:** 💵
+
+  - Atributos: productos solicitados, cantidad, precio de venta, y fecha de entrega.
+  - Cada pedido está asociado a un cliente, lo cual permite rastrear las ventas y calcular el valor total de cada pedido.
+    
+**Devoluciones:** ⏮️
+
+  - Atributos: fecha de devolución, motivo de la devolución, y si se realizó un reembolso.
+  - Cada devolución está vinculada a un pedido de venta y a un cliente específico, permitiendo el control de devoluciones y del servicio post-venta.
+
+## Prerequisitos de las APIS: 🤓🐋
+**1.1 Desargar el archivo txt llamado [Datos_NEO4j.txt](https://github.com/cesarurielhr/02_neo4j_api/blob/main/Datos_NEO4J.txt)**
+
+**1.2. Descargar desde DockerHub 🐳 la imagen de la APIS con el siguiente comando:** 
 ```
 docker pull cesarurielhr/02_redis_api
 ```
-**1.3 Inicializar un docker Compose en que incluya un contenedor api y otro contenedorque contiene los bd de neo4j y la bd de cache redis**
+**1.3 Inicializar un docker-Compose 🐳 en que incluya un contenedor api y otros contenedores que contienen los bd prinpal como el caso de neo4j y la bd de cache con redis**
 
-**1.4 ENDPOINTS**
+  Archivo: [docker-compose.yml](https://github.com/cesarurielhr/02_neo4j_api/blob/main/docker-compose.yml) 
+
+**1.4 ENDPOINTS** 💻
+
+ Archivo de backend en postaman [02_ne4j_api_app.postman_collection.json ](https://github.com/cesarurielhr/02_neo4j_api/blob/main/02_ne4j_api_app.postman_collection.json)
  
-**1.5 Querys**
+ Para poder utilizar el archivo deberas importarlo a postman para probar las 12 querys selecionadas de las cuales 1 fue creada para complentar el requerimento 
+ este query debe de ejecutarse antes de las demas querys.
+
+
+**1.5 Querys** 🕸️
+
+Los siguiente fueron realizado con lenguaje cypher para NEO4J siendo las querys solitadas para el laboratorio
+
 Q01. Obtener la lista de productos que tienen menos de 10 unidades en stock.
   ```
   MATCH (p:Producto) 
