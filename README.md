@@ -37,9 +37,9 @@ RETURN p
 - Q04. Encontrar los productos que han sido comprados por más de 5 clientes diferentes.
   ```
    MATCH (cli:Cliente)-[:HACE]->(pv:PedidoVenta)
- WITH pv, COUNT(DISTINCT cli) AS numClientes
- WHERE numClientes > 5
- ```
+   WITH pv, COUNT(DISTINCT cli) AS numClientes
+   WHERE numClientes > 5
+  ```
 - Q05. Obtener la lista de todos los  proveedores.
   ```
   MATCH (prov:Proveedor) RETURN prov
@@ -58,13 +58,13 @@ RETURN p
    RETURN pv;
    ```
 - Q08. Cambiar todos los productos suministrados por un proveedor a otro proveedor.
- ```
- MATCH (provAnt:Proveedor {id: 'PR002'})-[r:SUMINISTRA]->(p:Producto) 
+   ```
+   MATCH (provAnt:Proveedor {id: 'PR002'})-[r:SUMINISTRA]->(p:Producto) 
            MATCH (provNuevo:Proveedor {id: 'PR005'}) 
            DELETE r 
            CREATE (provNuevo)-[:SUMINISTRA]->(p) 
            RETURN p
-  ```
+   ```
 - Q09. Obtener la lista de proveedores que han recibido pedidos de compra por más de $50,000 en total.
   ```
   MATCH (prov:Proveedor)<-[:REALIZADO_A]-(pc:PedidoCompra)
